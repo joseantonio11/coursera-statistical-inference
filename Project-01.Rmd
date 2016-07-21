@@ -1,7 +1,7 @@
 ---
 title: "Project-01"
 output: pdf_document
-author: jose Antonio
+author: jose Antonio (joseantonio@me.com)
 ---
 
 github: [Project](https://github.com/joseantonio11/coursera-statistical-inference)
@@ -11,9 +11,9 @@ knitr::opts_chunk$set(echo = TRUE)
 require('knitr', quietly=TRUE)
 ```
 
-## TITLE: Simulating Exponential Distribution
+## I- TITLE: Simulating Exponential Distribution
 
-## OVERVIEW:
+## II - OVERVIEW:
 
 In this project we use the exponential distribution in R and compare it with the Central Limit Theorem. The following criteria will be used for this project:
 
@@ -41,13 +41,18 @@ library(stats)
 library(ggplot2)
 ```
 
-## 1 - Sample Mean compared to Theorical mean
+## III - SIMULATIONS
+Answering the questions using R and explanations
+
+## 1 - Sample Mean versus Theoretical Mean
 
 ```{r, echo=TRUE}
 set.seed(1) ## reproducible results
 lambda <- 0.2 # rate for simulations
 n <- 40 # number of samples
 simulations <- 1:1000 # suggested
+meansd <- 1/0.2 # mean of exponential distribution
+sdexp <- 1/0.2 # standard deviatin of exponential distribution
 ```
 
 ### 1.1 - Sample Mean
@@ -80,7 +85,42 @@ abline(v=1/lambda,col="red")
 ```
 
 
-## 2 - Compare Sample Variance to Theoretical Variance
+## 2 - Sample Variance versus Theoretical Variance
+
+### 2.1 - Calculating the standard deviation (sample and theorical distribution)
+
+```{r, echo=TRU}
+## sd of sample distribution
+sd(sample_mean$simcol)
+## sd of theoretical distribution
+(1/lambda)/sqrt(40)
+```
+
+## 2.2 - Calculating Variance (sample and theorical distribution)
+
+```{r, echo=TRUE}
+## Variance of sample distribution
+var(sample_mean$simcol)
+## Variance of theoretical distribution
+((1/lambda)/sqrt(40))^2
+```
+
+* THE SAMPLE SD IS CLOSE TO THEORETICAL SD. THE VARIANCE IS SIMILAR
+
+## 2.3 - Histogram
+
+```{r, echo=TRUE}
+hist(sample_mean$simcol, main = "1000 averages of 40 random", xlab = "Mean", cex.main=0.7)
+abline(v=mean(sample_mean$simcol),col="blue")
+## Standard Deviation
+abline(v=mean(sample_mean$simcol)+ sd(sample_mean$simcol), col="red", lw=2)
+abline(v=mean(sample_mean$simcol)- sd(sample_mean$simcol), col="red", lw=2)
+## Theoretical SD
+abline(v=mean(sample_mean$simcol)+sqrt(sdexp^2/n), col = "green")
+abline(v=mean(sample_mean$simcol)-sqrt(sdexp^2/n), col = "green")
+```
+
+## 3 - Distribution
 
 
 
