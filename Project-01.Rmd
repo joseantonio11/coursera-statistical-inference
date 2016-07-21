@@ -1,7 +1,7 @@
 ---
 title: "Project-01"
-output: pdf_document
-author: jose Antonio (joseantonio@me.com)
+author: "jose Antonio (joseantonio@me.com)"
+output: word_document
 ---
 
 github: [Project](https://github.com/joseantonio11/coursera-statistical-inference)
@@ -9,11 +9,12 @@ github: [Project](https://github.com/joseantonio11/coursera-statistical-inferenc
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 require('knitr', quietly=TRUE)
+opts_chunk$set(dev = 'pdf') 
 ```
 
-## I- TITLE: Simulating Exponential Distribution
+## I- Title: Simulating Exponential Distribution
 
-## II - OVERVIEW:
+## II - Overview
 
 In this project we use the exponential distribution in R and compare it with the Central Limit Theorem. The following criteria will be used for this project:
 
@@ -39,9 +40,10 @@ library(rmarkdown)
 library(plyr)
 library(stats)
 library(ggplot2)
+library(tidyr)
 ```
 
-## III - SIMULATIONS
+## III - Simulations
 Answering the questions using R and explanations
 
 ## 1 - Sample Mean versus Theoretical Mean
@@ -89,11 +91,9 @@ abline(v=1/lambda,col="red")
 
 ### 2.1 - Calculating the standard deviation (sample and theorical distribution)
 
-```{r, echo=TRU}
-## sd of sample distribution
-sd(sample_mean$simcol)
-## sd of theoretical distribution
-(1/lambda)/sqrt(40)
+```{r, echo=TRUE}
+sd(sample_mean$simcol, na.rm = TRUE) # sd of sample distribution
+(1/lambda)/sqrt(40) # sd of theoretical distribution
 ```
 
 ## 2.2 - Calculating Variance (sample and theorical distribution)
@@ -122,15 +122,18 @@ abline(v=mean(sample_mean$simcol)-sqrt(sdexp^2/n), col = "green")
 
 ## 3 - Distribution
 
+Comparing large collection or random exponentials (1000) against large coolection of averages (40). 
+Show that the distribution is approximately normal.
 
-
-
-
-
-
-```{r, echo=TRUE}
-cat("Sample mean = ", s-mean, "  ", "Theoretical Distribution= ", center-dist)
+## 3.1 - Distribution Graphic
+```{r,echo=TRUE}
+g <- ggplot(data = sample_mean, aes(x = simcol))
+g <- g + geom_histogram(aes(y = ..density..), fill = I('grey'), binwidth = 0.30, color = I('black')) 
+g <- g + xlab("Distribution of Sample Values") + ylab("Probability Density") 
+g <- g + stat_function(fun = dnorm, args = list(mean = 5, sd = sd(sample_mean$simcol)))
+g
 ```
 
+* As the overlay in Graphic, the distribution appears Normal.
 
 
