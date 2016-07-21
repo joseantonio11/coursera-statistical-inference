@@ -1,0 +1,96 @@
+---
+title: "Project-01"
+output: pdf_document
+author: jose Antonio
+---
+
+github: [Project](https://github.com/joseantonio11/coursera-statistical-inference)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require('knitr', quietly=TRUE)
+```
+
+## TITLE: Simulating Exponential Distribution
+
+## OVERVIEW:
+
+In this project we use the exponential distribution in R and compare it with the Central Limit Theorem. The following criteria will be used for this project:
+
+- mean of exponential distribution = 1/lambda
+- standard deviation = 1/lambda
+- lambda = 0.2 for simulations
+- investigate distribution of 40 exponentials (will need to do 1000 simulations)
+
+The problems to se solved are:
+
+1 - Show the sample mean and compare it to the theoretical mean of the distribution.
+
+2 - Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution.
+
+3 - Show that the distribution is approximately normal.
+
+### Libraries
+```{r, echo=TRUE}
+getwd()
+library(knitr)
+library(markdown)
+library(rmarkdown)
+library(plyr)
+library(stats)
+library(ggplot2)
+```
+
+## 1 - Sample Mean compared to Theorical mean
+
+```{r, echo=TRUE}
+set.seed(1) ## reproducible results
+lambda <- 0.2 # rate for simulations
+n <- 40 # number of samples
+simulations <- 1:1000 # suggested
+```
+
+### 1.1 - Sample Mean
+
+```{r,echo=TRUE}
+sample_mean <- data.frame(simcol=sapply(simulations, function(simcol) 
+        {mean(rexp(n,lambda))}))
+```
+
+### 1.2 - Center Sample Distribution
+
+```{r, echo=TRUE}
+mean(sample_mean$simcol)
+```
+
+### 1.3 - Center Theoretical Distribution
+
+```{r, echo=TRUE}
+1/lambda
+```
+
+* THE SAMPLE MEAN (4,99) IS VERY CLOSE TO THEORETICAL MEAN (5)
+
+### 1.4 - Histogram
+
+```{r, echo=TRUE}
+hist(sample_mean$simcol, main = "1000 averages of 40 random", cex.main=0.7)
+abline(v=mean(sample_mean$simcol),col="green")
+abline(v=1/lambda,col="red")
+```
+
+
+## 2 - Compare Sample Variance to Theoretical Variance
+
+
+
+
+
+
+
+```{r, echo=TRUE}
+cat("Sample mean = ", s-mean, "  ", "Theoretical Distribution= ", center-dist)
+```
+
+
+
