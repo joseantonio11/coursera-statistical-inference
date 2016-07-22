@@ -1,0 +1,138 @@
+---
+title: "Project-02 - EDA for ToothGrowth data"
+author: "jose Antonio (joseantonio@me.com)"
+output: pdf_document
+---
+
+github: [Project](https://github.com/joseantonio11/coursera-statistical-inference)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require('knitr', quietly=TRUE)
+```
+
+## Title: Analize the ToothGrowth Data
+
+## Overview
+
+In this Project we're going to analyze the ToothGrowth data in the R datasets package.
+
+The objectives are:
+
+1 - Load the ToothGrowth data and perform some basic exploratory data analyses.
+
+2 - Provide a basic summary of the data.
+
+3 - Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
+
+4 - State conclusions and the assumptions needed for your conclusions.
+
+
+### Libraries
+```{r, echo=TRUE}
+getwd()
+library(knitr)
+library(markdown)
+library(rmarkdown)
+library(plyr)
+library(stats)
+library(ggplot2)
+```
+
+## 1 - Load the ToothGrowth data and perform some basic EDA
+
+### 1.1 - Loading the data
+
+```{r, echo=TRUE}
+library(datasets)
+data(ToothGrowth)
+str(ToothGrowth)
+head(ToothGrowth)
+```
+
+### 1.2 - Perform some basic EDA
+
+The dataset has 60 observations and 3 variables as describe:
+
+- len (numeric) = Tooth lenght
+- supp (factor) = Vitamin supplement (VC = Vitamin C, OJ - Oranje Juice)
+- dose (numeric) = Dose in milligrams (0.5, 1.0, 2.0) - (This variable could be factor if necessary).
+
+* Graphic per Dose and Kind of Vitamin
+
+```{r,echo=TRUE}
+g <- ggplot(ToothGrowth, aes(x=supp,y=len, fill=supp))
+g <- g + geom_boxplot()+facet_wrap(~dose)
+g <- g + xlab('Supplement')+ylab('Tooth Length')
+g <- g + ggtitle("Tooth length by dosage (0.5, 1.0, 2.0")
+g
+```
+
+As demonstrated in the Graphic, "apparently" Orange Juice (OJ) supplement seems to provide a better tooth growth with smaller doses. 
+
+```{r, echo=TRUE}
+aggregate(ToothGrowth$len, by=list('Dose'=ToothGrowth$dose,'Supp'=ToothGrowth$supp), FUN = mean)
+```
+
+Above, using aggregate function to mean group by dose, we can see that for Dose 0.5, OJ has 13.23 against 7.98 from VC. With Dose 1.0, OJ has 22.70 against 16.77. At a dosage of 2 mg, the impact became near the same.
+
+
+## 2 - Provide a basic summary of the data.
+
+```{r, echo=TRUE}
+summary(ToothGrowth)
+table(ToothGrowth$dose, ToothGrowth$supp)  ## table view of data
+```
+
+* Transform the variable dose to a factor variable and making a summary
+```{r, echo=TRUE}
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+summary(ToothGrowth$dose)
+```
+
+
+## 3 - Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
+
+To confirm in our graphic, the higher the dosage, the longer the teeth.
+
+```{r, echo=TRUE}
+t.test(len~dose, paired=F, var.equal=F, data=subset(ToothGrowth, dose %in% c(0.5,2)))
+```
+
+Looking for basic EDA and summaries, there seems to be a correlation between the dose and tooth growth. OJ is more effective for lower doses, but near equal to VC on 2 milligram.
+
+To verify this, we need indentify the confidence interval for supp. Lets test if OJ is better than VC for tooth growth, looking for the Ho (Hypothesis Null) as that OJ and VC realize the same.
+
+```{r, echo=TRUE}
+t.test(len~supp, paired=F, var.equal=F, data=ToothGrowth)
+```
+
+Based on 95% confidence interval, the Ho cannot be rejected. So, OJ is not better than VC. 
+
+### 3.1 Testing each dosage (0.5, 1.0 and 2.0)
+
+```{r, echo=TRUE}
+t.test(len ~ supp, paired=F, var.equal=F, data=subset(ToothGrowth, dose == 0.5))
+```
+
+At dosage=.5, OJ is better than VC (Ho is rejected base on 95% confidence interval).
+
+```{r, echo=TRUE}
+t.test(len ~ supp, paired=F, var.equal=F, data=subset(ToothGrowth, dose == 1.0))
+```
+
+At dosage=1.0, OJ is better than VC (Ho is rejected based on 95% confidence inteval)
+
+```{r, echo=TRUE}
+t.test(len ~ supp, paired=F, var.equal=F, data=subset(ToothGrowth, dose == 2.0))
+```
+
+At dosage= 2.0, OJ is as good as VC (Ho cannot be rejected based on 95% confidence interval)
+
+## 4 - State conclusions and the assumptions for conclusions
+
+The tests using confidence intervals assumed that the sample are independent (randomily chosen), the population variance is the same and that the distribution is normal.
+
+OC and VC have different effects on tooth growth, and dosage is a key factor. OC dosage have a larger impact than VC on tooth growth with a smaller dosage, but at 2mg, the impact is the same. So, there is correlation between the supplement type used and teeth growth in guinea pigs.
+
+
