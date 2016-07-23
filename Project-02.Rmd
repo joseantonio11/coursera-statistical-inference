@@ -1,7 +1,7 @@
 ---
 title: "Project-02 - EDA for ToothGrowth data"
 author: "jose Antonio (joseantonio@me.com)"
-output: pdf_document
+output: word_document
 ---
 
 github: [Project](https://github.com/joseantonio11/coursera-statistical-inference)
@@ -74,7 +74,7 @@ As demonstrated in the Graphic, "apparently" Orange Juice (OJ) supplement seems 
 aggregate(ToothGrowth$len, by=list('Dose'=ToothGrowth$dose,'Supp'=ToothGrowth$supp), FUN = mean)
 ```
 
-Above, using aggregate function to mean group by dose, we can see that for Dose 0.5, OJ has 13.23 against 7.98 from VC. With Dose 1.0, OJ has 22.70 against 16.77. At a dosage of 2 mg, the impact became near the same.
+Using aggregate function to mean group by dose, we can see that for Dose 0.5, OJ has 13.23 against 7.98 from VC. With Dose 1.0, OJ has 22.70 against 16.77. At a dosage of 2 mg, the impact becomes near the same value.
 
 
 ## 2 - Provide a basic summary of the data.
@@ -84,7 +84,8 @@ summary(ToothGrowth)
 table(ToothGrowth$dose, ToothGrowth$supp)  ## table view of data
 ```
 
-* Transform the variable dose to a factor variable and making a summary
+* Transforming the variable dose to a factor variable and making a summary
+
 ```{r, echo=TRUE}
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
 summary(ToothGrowth$dose)
