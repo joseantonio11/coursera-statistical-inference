@@ -1,5 +1,5 @@
 ---
-title: "Project-01"
+title: "Project-01 - Simulating Exponential Distribution"
 author: "jose Antonio (joseantonio@me.com)"
 output: word_document
 ---
@@ -9,7 +9,6 @@ github: [Project](https://github.com/joseantonio11/coursera-statistical-inferenc
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 require('knitr', quietly=TRUE)
-opts_chunk$set(dev = 'pdf') 
 ```
 
 ## I- Title: Simulating Exponential Distribution
@@ -23,11 +22,11 @@ In this project we use the exponential distribution in R and compare it with the
 - lambda = 0.2 for simulations
 - investigate distribution of 40 exponentials (will need to do 1000 simulations)
 
-The problems to se solved are:
+The problems to be solved are:
 
 1 - Show the sample mean and compare it to the theoretical mean of the distribution.
 
-2 - Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution.
+2 - Show how variable sample is (via variance) and compare it to the theoretical variance of the distribution.
 
 3 - Show that the distribution is approximately normal.
 
@@ -44,6 +43,7 @@ library(tidyr)
 ```
 
 ## III - Simulations
+
 Answering the questions using R and explanations
 
 ## 1 - Sample Mean versus Theoretical Mean
@@ -76,7 +76,7 @@ mean(sample_mean$simcol)
 1/lambda
 ```
 
-* THE SAMPLE MEAN (4,99) IS VERY CLOSE TO THEORETICAL MEAN (5)
+* CONCLUSION: THE SAMPLE MEAN (4,99) IS VERY CLOSE TO THEORETICAL MEAN (5).
 
 ### 1.4 - Histogram
 
@@ -105,7 +105,7 @@ var(sample_mean$simcol)
 ((1/lambda)/sqrt(40))^2
 ```
 
-* THE SAMPLE SD IS CLOSE TO THEORETICAL SD. THE VARIANCE IS SIMILAR
+* CONCLUSION: THE SAMPLE SD IS CLOSE TO THEORETICAL SD. THE VARIANCE IS SIMILAR.
 
 ## 2.3 - Histogram
 
